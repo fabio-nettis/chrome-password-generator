@@ -1,0 +1,66 @@
+.app-container {
+  min-width: 400px;
+  max-width: 400px;
+}
+
+.title-container {
+  background-color: #0078d4 !important;
+  color: #ffffff;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.title-text {
+  font-size: 14px;
+  line-height: 16px !important;
+  color: #ffffff !important;
+  margin-left: 8px !important;
+  font-weight: 550;
+  text-align: start;
+  font-weight: 600;
+  flex: 1;
+}
+
+input,
+input:disabled,
+.ms-TextField-fieldGroup,
+.ms-TextField-field {
+  border-width: 0px !important;
+  color: #1f1f1f;
+}
+
+.ms-Checkbox-text {
+  font-weight: 600;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.result-input {
+  font-size: 10px;
+}
+
+.result {
+  flex: 1;
+  padding-right: 16px;
+}
+
+.option {
+  margin-bottom: 16px;
+}

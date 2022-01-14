@@ -1,0 +1,11 @@
+# dependencies
+/extension/node_modules
+
+# production
+/static
+/extension/build
+
+# misc
+.DS_Store
+
+npm-debug.log*
