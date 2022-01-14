@@ -2,7 +2,7 @@
   "short_name": "Password Generator",
   "name": "Password Generator",
   "description": "Generate secure passwords on the fly. You'll never reuse a password again!",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "permissions": [],
   "browser_action": {
