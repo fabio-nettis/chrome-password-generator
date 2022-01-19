@@ -1,4 +1,6 @@
+import { formatMoney } from "accounting";
 import { Icon } from "@fluentui/react/lib/Icon";
+
 import { useCallback, useEffect, useState } from "react";
 
 import {
@@ -11,13 +13,15 @@ import {
 } from "@fluentui/react";
 
 import "./App.css";
+import Mellt from "./libs/mellt";
 
 const MAX_LENGTH = 64;
-const MIN_LENGTH = 7;
+const MIN_LENGTH = 13;
 
 function App() {
   const [password, setPassword] = useState("");
   const [hasCopy, setHasCopy] = useState(false);
+  const [daysToCrack, setDaysToCrack] = useState(0);
   const [passwordConfig, setPasswordConfig] = useState({
     length: 11,
     special: false,
@@ -26,37 +30,49 @@ function App() {
   });
 
   // generate password
-  const generate = useCallback(() => {
-    const { length, capitals, special, numbers } = passwordConfig;
-    setPassword((op) => {
-      if (op.length !== MAX_LENGTH || length < op.length) {
-        let psw = "";
-        let characters = "abcdefghijklmnopqrstuvwxyz";
+  const generate = useCallback(
+    (regenerate = false) => {
+      const { length, capitals, special, numbers } = passwordConfig;
+      setPassword((op) => {
+        if (
+          regenerate ||
+          ((op.length !== MAX_LENGTH || length < op.length) &&
+            (op.length !== MIN_LENGTH || length > op.length))
+        ) {
+          let psw = "";
+          let characters = "abcdefghijklmnopqrstuvwxyz";
 
-        if (capitals) {
-          characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          if (capitals) {
+            characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          }
+
+          if (numbers) {
+            characters += "0123456789";
+          }
+
+          if (special) {
+            characters += "!.@#$%^&*_-+=";
+          }
+
+          for (let i = 0; i < length; i++) {
+            psw += characters.charAt(
+              Math.floor(Math.random() * characters.length)
+            );
+          }
+
+          return psw;
+        } else {
+          return op;
         }
+      });
+    },
+    [passwordConfig]
+  );
 
-        if (numbers) {
-          characters += "0123456789";
-        }
-
-        if (special) {
-          characters += "!.@#$%^&*_-+=";
-        }
-
-        for (let i = 0; i < length; i++) {
-          psw += characters.charAt(
-            Math.floor(Math.random() * characters.length)
-          );
-        }
-
-        return psw;
-      } else {
-        return op;
-      }
-    });
-  }, [passwordConfig]);
+  // regenerate password
+  const regenerate = useCallback(() => {
+    generate(true);
+  }, [generate]);
 
   // copies the password into the clipboard
   const copy = useCallback(async () => {
@@ -72,10 +88,15 @@ function App() {
     generate();
   }, [passwordConfig]);
 
+  // update days to crack
+  useEffect(() => {
+    setDaysToCrack(new Mellt().CheckPassword(password));
+  }, [password]);
+
   return (
     <div className="app-container">
       <div className="title-container">
-        <Icon style={{ fontSize: 14 }} iconName="PasswordField" />
+        <Icon style={{ fontSize: 14 }} iconName="PermissionsSolid" />
         <p className="title-text">Passwort Generator</p>
         <Icon
           onClick={() => {
@@ -122,7 +143,7 @@ function App() {
             <IconButton
               aria-describedby="tooltip"
               iconProps={{ iconName: "Sync" }}
-              onClick={generate}
+              onClick={regenerate}
             />
           </TooltipHost>
 
@@ -144,6 +165,7 @@ function App() {
               checked={passwordConfig.capitals}
               onChange={(_, val) => {
                 setPasswordConfig((pc) => ({ ...pc, capitals: val }));
+                regenerate();
               }}
             />
           </div>
@@ -154,6 +176,7 @@ function App() {
               checked={passwordConfig.numbers}
               onChange={(_, val) => {
                 setPasswordConfig((pc) => ({ ...pc, numbers: val }));
+                regenerate();
               }}
             />
           </div>
@@ -164,9 +187,36 @@ function App() {
               checked={passwordConfig.special}
               onChange={(_, val) => {
                 setPasswordConfig((pc) => ({ ...pc, special: val }));
+                regenerate();
               }}
             />
           </div>
+        </div>
+
+        <Separator />
+
+        <div
+          style={{
+            textAlign: "center",
+            color: "rgba(0, 0, 0, 0.7)",
+            userSelect: "none",
+            msUserSelect: "none",
+            WebkitUserSelect: "none",
+            MozUserSelect: "none",
+          }}
+        >
+          Schon gewusst? Es würde{" "}
+          <strong style={{ color: "#0078d4" }}>
+            {daysToCrack === 0 ? (
+              <span>weniger als 1 Tag </span>
+            ) : (
+              <span>
+                {daysToCrack === 1000000000 ? "über" : "zirka"}{" "}
+                {formatMoney(daysToCrack, "Tage", 0, "'", ".", "%v %s")}
+              </span>
+            )}
+          </strong>{" "}
+          dauern um dieses Passwort zu knacken.
         </div>
       </div>
     </div>
