@@ -1,6 +1,6 @@
 {
   "name": "chrome-password-generator",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "private": false,
   "dependencies": {
     "@fluentui/font-icons-mdl2": "^8.1.20",
