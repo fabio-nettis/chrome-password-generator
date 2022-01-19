@@ -12,6 +12,9 @@ import {
 
 import "./App.css";
 
+const MAX_LENGTH = 64;
+const MIN_LENGTH = 7;
+
 function App() {
   const [password, setPassword] = useState("");
   const [hasCopy, setHasCopy] = useState(false);
@@ -25,27 +28,33 @@ function App() {
   // generate password
   const generate = useCallback(() => {
     const { length, capitals, special, numbers } = passwordConfig;
-    setPassword(() => {
-      let psw = "";
-      let characters = "abcdefghijklmnopqrstuvwxyz";
+    setPassword((op) => {
+      if (op.length !== MAX_LENGTH || length < op.length) {
+        let psw = "";
+        let characters = "abcdefghijklmnopqrstuvwxyz";
 
-      if (capitals) {
-        characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (capitals) {
+          characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+
+        if (numbers) {
+          characters += "0123456789";
+        }
+
+        if (special) {
+          characters += "!.@#$%^&*_-+=";
+        }
+
+        for (let i = 0; i < length; i++) {
+          psw += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          );
+        }
+
+        return psw;
+      } else {
+        return op;
       }
-
-      if (numbers) {
-        characters += "0123456789";
-      }
-
-      if (special) {
-        characters += "!.@#$%^&*_-+=";
-      }
-
-      for (let i = 0; i < length; i++) {
-        psw += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-
-      return psw;
     });
   }, [passwordConfig]);
 
@@ -80,8 +89,8 @@ function App() {
       <div className="main-container">
         <div>
           <Slider
-            min={7}
-            max={64}
+            min={MIN_LENGTH}
+            max={MAX_LENGTH}
             value={passwordConfig.length}
             onChange={(value) => {
               setPasswordConfig((pc) => ({ ...pc, length: value }));
@@ -109,6 +118,14 @@ function App() {
               disabled
             />
           </div>
+          <TooltipHost id="tooltip1" content="Neu" style={{ marginLeft: 8 }}>
+            <IconButton
+              aria-describedby="tooltip"
+              iconProps={{ iconName: "Sync" }}
+              onClick={generate}
+            />
+          </TooltipHost>
+
           <TooltipHost id="tooltip" content="Kopieren">
             <IconButton
               aria-describedby="tooltip"
