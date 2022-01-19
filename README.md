@@ -1,10 +1,19 @@
 <p align="center">
-  <img src="icon/x128.png" alt="Logo" />
+  <img height="50px" src="icon/x128.png" alt="Logo" />
 </p>
 
-<h3 align="center">Password Generator</h3>
-<p align="center">A simple chrome extension to generate passwords on the fly.</p>
-<br />
+<p align="center">
+  <h1 align="center">
+    Password Generator
+  </h1>
+  <h3 align="center">
+    A simple chrome extension to generate passwords on the fly.
+  </h3>
+  <br />
+  <p align="center">
+    <img src="https://user-images.githubusercontent.com/36916632/150149976-9345d6ae-8106-405d-a33b-3593b8b37f5c.png" />
+  </p>
+</p>
 
 # About
 
