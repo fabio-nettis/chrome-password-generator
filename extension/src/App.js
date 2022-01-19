@@ -69,6 +69,11 @@ function App() {
     [passwordConfig]
   );
 
+  // regenerate password
+  const regenerate = useCallback(() => {
+    generate(true);
+  }, [generate]);
+
   // copies the password into the clipboard
   const copy = useCallback(async () => {
     setHasCopy(true);
@@ -138,7 +143,7 @@ function App() {
             <IconButton
               aria-describedby="tooltip"
               iconProps={{ iconName: "Sync" }}
-              onClick={() => generate(true)}
+              onClick={regenerate}
             />
           </TooltipHost>
 
@@ -160,6 +165,7 @@ function App() {
               checked={passwordConfig.capitals}
               onChange={(_, val) => {
                 setPasswordConfig((pc) => ({ ...pc, capitals: val }));
+                regenerate();
               }}
             />
           </div>
@@ -170,6 +176,7 @@ function App() {
               checked={passwordConfig.numbers}
               onChange={(_, val) => {
                 setPasswordConfig((pc) => ({ ...pc, numbers: val }));
+                regenerate();
               }}
             />
           </div>
@@ -180,6 +187,7 @@ function App() {
               checked={passwordConfig.special}
               onChange={(_, val) => {
                 setPasswordConfig((pc) => ({ ...pc, special: val }));
+                regenerate();
               }}
             />
           </div>
