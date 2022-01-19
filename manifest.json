@@ -3,9 +3,9 @@
   "name": "Password Generator",
   "description": "Generate secure passwords on the fly. You'll never reuse a password again!",
   "version": "1.0.1",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "permissions": [],
-  "browser_action": {
+  "action": {
     "default_popup": "extension/build/index.html",
     "default_icon": {
       "16": "/icon/x16.png",
@@ -19,6 +19,5 @@
     "32": "/icon/x32.png",
     "48": "/icon/x48.png",
     "128": "/icon/x128.png"
-  },
-  "content_security_policy": "script-src 'self' 'sha256-fdAfMKZtCTRPKMRznGwonJHC++vCCrQS7XFnVrzSXAE=' 'sha256-YD8w9VLrdvqI5/tFVmpT+1337ly+e/JvPrkRxYZo/w4='; object-src 'self';"
+  }
 }
