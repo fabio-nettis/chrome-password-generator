@@ -4,7 +4,7 @@
   "private": false,
   "dependencies": {
     "@fluentui/font-icons-mdl2": "^8.1.20",
-    "@fluentui/react": "^8.77.0",
+    "@fluentui/react": "^8.77.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.2.1",
