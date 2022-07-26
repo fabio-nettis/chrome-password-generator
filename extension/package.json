@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "private": false,
   "dependencies": {
-    "@fluentui/font-icons-mdl2": "^8.4.3",
+    "@fluentui/font-icons-mdl2": "^8.4.4",
     "@fluentui/react": "^8.81.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
